@@ -4,6 +4,7 @@ from functions.get_files_info import get_files_info
 from functions.get_file_content import get_file_content
 from functions.write_file import write_file
 from functions.run_python_file import run_python_file
+from config import WORKING_DIR
 
 def call_function(function_call_part, verbose=False):
     valid_functions = {
@@ -32,7 +33,7 @@ def call_function(function_call_part, verbose=False):
     else:
         print(f" - Calling function: {fn_name}")
     
-    executed = valid_functions[fn_name]("./calculator", **fn_args)
+    executed = valid_functions[fn_name](WORKING_DIR, **fn_args)
 
     return types.Content(
     role="tool",

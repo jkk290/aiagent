@@ -32,3 +32,20 @@ def run_python_file(working_directory, file_path, args=[]):
     except Exception as e:
         return f"Error: executing Python file: {e}"
 
+schema_run_python_file= types.FunctionDeclaration(
+    name="run_python_file",
+    description="Run a python file and returns the stdout, stderr, and exit code if not 0",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The name of the python file to be ran. Include the subfolder with filename if file is in a subfolder(s) of the working directory. Example \"pkg/test.py\"",
+            ),
+            "args": types.Schema(
+                type=types.Type.LIST,
+                description="Arguments to pass with the python file that will be ran. Example \"calculator.py\" \"5 + 3\""
+            )
+        },
+    ),
+)

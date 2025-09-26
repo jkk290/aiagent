@@ -21,3 +21,21 @@ def write_file(working_directory, file_path, content):
         return f"Successfully wrote to \"{abs_full}\" ({len(content)} characters written)"
     except Exception as e:
         return f"Error: {e}"
+
+schema_write_file= types.FunctionDeclaration(
+    name="write_file",
+    description="Write to new or overwrite file's content with the provided content",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The name of the file to be written to. Include the subfolder with filename if file is in a subfolder(s) of the working directory. Example \"pkg/test.txt\"",
+            ),
+            "content": types.Schema(
+                type=types.Type.STRING,
+                description="Text to be written to the given file"
+            )
+        },
+    ),
+)

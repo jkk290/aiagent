@@ -1,5 +1,7 @@
 import os
 from config import file_char_limit
+from google import genai
+from google.genai import types
 
 def get_file_content(working_directory, file_path):
 

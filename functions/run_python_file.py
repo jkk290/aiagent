@@ -1,5 +1,7 @@
 import os
 import subprocess
+from google import genai
+from google.genai import types
 
 def run_python_file(working_directory, file_path, args=[]):
     abs_work = os.path.abspath(working_directory)
@@ -43,8 +45,8 @@ schema_run_python_file= types.FunctionDeclaration(
                 description="The name of the python file to be ran. Include the subfolder with filename if file is in a subfolder(s) of the working directory. Example \"pkg/test.py\"",
             ),
             "args": types.Schema(
-                type=types.Type.LIST,
-                description="Arguments to pass with the python file that will be ran. Example \"calculator.py\" \"5 + 3\""
+                type=types.Type.STRING,
+                description="Optional arguments to pass with the python file that will be ran. Example \"calculator.py\" \"5 + 3\""
             )
         },
     ),

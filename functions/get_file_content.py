@@ -25,4 +25,18 @@ def get_file_content(working_directory, file_path):
     
     except Exception as e:
         return f"Error: {e}"
+
+schema_get_file_content = types.FunctionDeclaration(
+    name="get_file_content",
+    description="Returns the contents of a file as a string. If the character count is over 10,000, the content gets truncated at 10,000 characters. A footer note is appended to inform about the truncation",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The name of the file to get contents from. Include subfolder with filename if file is in a subfolder(s) of the working directory. Example \"pkg/file.txt\"",
+            ),
+        },
+    ),
+)
     

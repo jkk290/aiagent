@@ -21,8 +21,8 @@ def call_function(function_call_part, verbose=False):
             role="tool",
             parts=[
                 types.Part.from_function_response(
-                    name=function_name,
-                    response={"error": f"Unknown function: {function_name}"},
+                    name=fn_name,
+                    response={"error": f"Unknown function: {fn_name}"},
                 )
             ],
         )
@@ -32,4 +32,14 @@ def call_function(function_call_part, verbose=False):
     else:
         print(f" - Calling function: {fn_name}")
     
-    executed = fn_name("./calculator", **fn_args)
+    executed = valid_functions[fn_name]("./calculator", **fn_args)
+
+    return types.Content(
+    role="tool",
+    parts=[
+        types.Part.from_function_response(
+            name=fn_name,
+            response={"result": executed},
+        )
+    ],
+)

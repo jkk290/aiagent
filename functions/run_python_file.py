@@ -3,7 +3,7 @@ import subprocess
 from google import genai
 from google.genai import types
 
-def run_python_file(working_directory, file_path, args=[]):
+def run_python_file(working_directory, file_path, args=None):
     abs_work = os.path.abspath(working_directory)
     abs_full = os.path.abspath(os.path.join(working_directory, file_path))
 
@@ -16,18 +16,21 @@ def run_python_file(working_directory, file_path, args=[]):
     if not abs_full.endswith(".py"):
         return f"Error: \"{file_path}\" is not a Python file"
     
-    formatted_args = " ".join(args)
+    commands = ["python3", abs_full]
+
+    if args:
+        commands.extend(args)
 
     try:
-        executed = subprocess.run(["python3", abs_full, formatted_args], capture_output=True, text=True, timeout=30, cwd=abs_work)
+        executed = subprocess.run(commands, capture_output=True, text=True, timeout=30, cwd=abs_work)
 
-        if executed.stdout == None or executed.stdout == "":
+        if executed.stdout == None and executed.stderr == None:
             return "No output produced"   
         
         formatted_output = f"STDOUT: {executed.stdout}\nSTDERR: {executed.stderr}"
 
         if not executed.returncode == 0:
-            formatted_output_exit_code = formatted_output + f"\nProcess exited with code {executed.exitcode}"
+            formatted_output_exit_code = formatted_output + f"\nProcess exited with code {executed.returncode}"
             return formatted_output_exit_code
 
         return formatted_output
